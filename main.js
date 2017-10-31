@@ -15,28 +15,61 @@ function main() {
 function buildDOM() {
 	
 	wheel = new Winwheel({
-                'numSegments'  : 8,     // Specify number of segments.
-                'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
-                'textFontSize' : 28,    // Set font size as desired.
-                'segments'     :        // Define segments including colour and text.
-                [
-                   {'fillStyle' : '#eae56f', 'text' : 'Prize 1'},
-                   {'fillStyle' : '#89f26e', 'text' : 'Prize 2'},
-                   {'fillStyle' : '#7de6ef', 'text' : 'Prize 3'},
-                   {'fillStyle' : '#e7706f', 'text' : 'Prize 4'},
-                   {'fillStyle' : '#eae56f', 'text' : 'Prize 5'},
-                   {'fillStyle' : '#89f26e', 'text' : 'Prize 6'},
-                   {'fillStyle' : '#7de6ef', 'text' : 'Prize 7'},
-                   {'fillStyle' : '#e7706f', 'text' : 'Prize 8'}
-                ],
-                'animation' :           // Specify the animation to use.
-                {
-                    'type'     : 'spinToStop',
-                    'duration' : 5,     // Duration in seconds.
-                    'spins'    : 8,     // Number of complete spins.
-                    'callbackFinished' : 'doneSpinning()'
-                }
-            });
+		'drawMode': 'image',
+		'numSegments': 12,
+		'drawText': true,
+		'textOrientation': 'curved',
+		'textAlignment': 'outer',
+		'textFontFamily': 'Courier',
+		'textFontSize': 24,
+		'imageOverlay': true,
+		'lineWidth': 4,
+		'strokeStyle': 'white',
+		'segments':
+		[
+		   {'text': 'WHAMMY'},
+		   {'text': '500'},
+		   {'text': '50'},
+		   {'text': '100'},
+		   {'text': '150'},
+		   {'text': '200'},
+		   {'text': 'WHAMMY'},
+		   {'text': '200'},
+		   {'text': '150'},
+		   {'text': '100'},
+		   {'text': '50'},
+		   {'text': '250'}
+		],
+		'animation' :           // Specify the animation to use.
+		{
+			'type'     : 'spinToStop',
+			'duration' : 15,     // Duration in seconds.
+			'spins'    : 3,     // Number of complete spins.
+			//'easing': 'easeOutQuad',
+			'callbackFinished' : 'doneSpinning()'
+		}
+    });
+	
+	wheel.segments[1].textFillStyle = '#FFFF00';
+	wheel.segments[2].textFillStyle = '#FFFF00';
+	wheel.segments[3].textFillStyle = '#FFFF00';
+	wheel.segments[4].textFillStyle = '#FFFF00';
+	wheel.segments[5].textFillStyle = '#FFFF00';
+	wheel.segments[6].textFillStyle = '#FFFF00';
+	wheel.segments[7].textFillStyle = '#FFFF00';
+	wheel.segments[8].textFillStyle = '#FFFF00';
+	wheel.segments[9].textFillStyle = '#FFFF00';
+	wheel.segments[10].textFillStyle = '#FFFF00';
+	wheel.segments[11].textFillStyle = '#FFFF00';
+	wheel.segments[12].textFillStyle = '#FFFF00';
+			
+	var wheelImg = new Image();
+	wheelImg.onload = function() {
+		wheel.wheelImage = wheelImg;
+		wheel.draw();
+		console.log("Loaded image");
+	}
+	wheelImg.src = "globe2.png";
 			
 	var spinButton = document.createElement("button");
 	spinButton.innerHTML = "Spin!"
