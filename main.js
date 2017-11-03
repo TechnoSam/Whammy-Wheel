@@ -1,4 +1,31 @@
 
+// -------------------------------------------------------------------------------------------
+// Customizations:
+
+// Point values
+// Each of these represents a sector on the wheel
+var POINTS_1 = "WHAMMY";
+var POINTS_2 = "500";
+var POINTS_3 = "50";
+var POINTS_4 = "100";
+var POINTS_5 = "150";
+var POINTS_6 = "200";
+var POINTS_7 = "WHAMMY";
+var POINTS_8 = "200";
+var POINTS_9 = "150";
+var POINTS_10 = "100";
+var POINTS_11 = "50";
+var POINTS_12 = "250";
+
+// Spin Parameters
+// Adjusting these numbers affect how the wheel behaves while spinning
+// The time the wheel will spin in seconds
+var SPIN_TIME_SEC = 7;
+// The minimum number of complete spins
+var NUM_SPINS = 3;
+
+// -----------------------------------------------------------------------------------------
+
 $(document).ready(main)
 
 // Global Variables
@@ -9,7 +36,6 @@ var wheel;
 function main() {
 	
 	buildDOM();
-	updateScores();
 	
 }
 
@@ -51,11 +77,30 @@ function buildDOM() {
 	girlsScoreList.className = "scroll-list"
 	girlsDiv.appendChild(girlsScoreList);
 	girlsDiv.appendChild(document.createElement("hr"));
+	girlsScoreDiv = document.createElement("div");
+	girlsScoreDiv.id = "girlsScoreDiv"
+	girlsDiv.appendChild(girlsScoreDiv);
+	var girlsMinusBtn = document.createElement("button");
+	girlsMinusBtn.id = "girlsMinusBtn";
+	girlsMinusBtn.className = "inline";
+	girlsMinusBtn.valign = "center";
+	girlsMinusBtn.innerHTML = "-";
+	girlsMinusBtn.title = "Remove the last score";
+	girlsMinusBtn.onclick = function() { editMinus("girls"); };
+	girlsScoreDiv.appendChild(girlsMinusBtn);
 	var girlsScore = document.createElement("p");
 	girlsScore.id = "#girlsScore";
+	girlsScore.className = "inline";
 	girlsScore.style = "font-size: 48px; margin: 0px; padding: 5px;";
 	girlsScore.innerHTML = "0";
-	girlsDiv.appendChild(girlsScore);
+	girlsScoreDiv.appendChild(girlsScore);
+	var girlsPlusBtn = document.createElement("button");
+	girlsPlusBtn.id = "girlsPlusBtn";
+	girlsPlusBtn.className = "inline";
+	girlsPlusBtn.innerHTML = "+";
+	girlsPlusBtn.title = "Add a score";
+	girlsPlusBtn.onclick = function() { var p = prompt("Enter a point value or WHAMMY"); if (p) { addPts("girls", p); } };
+	girlsScoreDiv.appendChild(girlsPlusBtn);
 	var girlsSpinBtn = document.createElement("button");
 	girlsSpinBtn.style = "padding: 5px";
 	girlsSpinBtn.innerHTML = "Spin For Girls"
@@ -79,11 +124,30 @@ function buildDOM() {
 	boysScoreList.className = "scroll-list"
 	boysDiv.appendChild(boysScoreList);
 	boysDiv.appendChild(document.createElement("hr"));
+	boysScoreDiv = document.createElement("div");
+	boysScoreDiv.id = "boysScoreDiv"
+	boysDiv.appendChild(boysScoreDiv);
+	var boysMinusBtn = document.createElement("button");
+	boysMinusBtn.id = "boysMinusBtn";
+	boysMinusBtn.className = "inline";
+	boysMinusBtn.valign = "center";
+	boysMinusBtn.innerHTML = "-";
+	boysMinusBtn.title = "Remove the last score";
+	boysMinusBtn.onclick = function() { editMinus("boys"); };
+	boysScoreDiv.appendChild(boysMinusBtn);
 	var boysScore = document.createElement("p");
 	boysScore.id = "#boysScore";
+	boysScore.className = "inline";
 	boysScore.style = "font-size: 48px; margin: 0px; padding: 5px;";
 	boysScore.innerHTML = "0";
-	boysDiv.appendChild(boysScore);
+	boysScoreDiv.appendChild(boysScore);
+	var boysPlusBtn = document.createElement("button");
+	boysPlusBtn.id = "boysPlusBtn";
+	boysPlusBtn.className = "inline";
+	boysPlusBtn.innerHTML = "+";
+	boysPlusBtn.title = "Add a score";
+	boysPlusBtn.onclick = function() { var p = prompt("Enter a point value or WHAMMY"); if (p) { addPts("boys", p); } };
+	boysScoreDiv.appendChild(boysPlusBtn);
 	var boysSpinBtn = document.createElement("button");
 	boysSpinBtn.style = "padding: 5px";
 	boysSpinBtn.innerHTML = "Spin For Boys"
@@ -108,24 +172,24 @@ function buildDOM() {
 		'strokeStyle': 'white',
 		'segments':
 		[
-		   {'text': 'WHAMMY'},
-		   {'text': '500'},
-		   {'text': '50'},
-		   {'text': '100'},
-		   {'text': '150'},
-		   {'text': '200'},
-		   {'text': 'WHAMMY'},
-		   {'text': '200'},
-		   {'text': '150'},
-		   {'text': '100'},
-		   {'text': '50'},
-		   {'text': '250'}
+		   {'text': POINTS_1},
+		   {'text': POINTS_2},
+		   {'text': POINTS_3},
+		   {'text': POINTS_4},
+		   {'text': POINTS_5},
+		   {'text': POINTS_6},
+		   {'text': POINTS_7},
+		   {'text': POINTS_8},
+		   {'text': POINTS_9},
+		   {'text': POINTS_10},
+		   {'text': POINTS_11},
+		   {'text': POINTS_12}
 		],
 		'animation' :           // Specify the animation to use.
 		{
 			'type'     : 'spinToStop',
-			'duration' : 2,     // Duration in seconds.
-			'spins'    : 1,     // Number of complete spins.
+			'duration' : SPIN_TIME_SEC,     // Duration in seconds.
+			'spins'    : NUM_SPINS,     // Number of complete spins.
 			//'easing': 'easeOutQuad',
 			'callbackFinished' : 'doneSpinning()'
 		}
@@ -154,6 +218,18 @@ function buildDOM() {
 	
 }
 
+function editMinus(team) {
+	
+	if (team !== "boys" && team !== "girls") {
+		console.log("Unrecognized team: " + team);
+		return;
+	}
+	
+	$("#" + team + "ScoreList li:last").remove();
+	updateScores();
+	
+}
+
 function addPts(team, pts) {
 	
 	if (team !== "boys" && team !== "girls") {
@@ -165,7 +241,6 @@ function addPts(team, pts) {
 	var scoreList = document.getElementById(listId);
 	var points = document.createElement("li");
 	points.innerHTML = pts;
-	points.tabindex = "1";
 	scoreList.append(points);
 	$("#" + listId).animate({scrollTop: $("#" + listId).prop("scrollHeight")}, 500);
 	updateScores();
