@@ -14,7 +14,91 @@ function main() {
 
 function buildDOM() {
 	
+	var mainDiv = document.createElement("div");
+	mainDiv.id = "#mainDiv";
+	mainDiv.width = "1920";
+	mainDiv.height = "1920";
+	mainDiv.align = "center";
+	mainDiv.valign = "center";
+	document.body.appendChild(mainDiv);
+	
+	var wheelCanvas = document.createElement("canvas");
+	wheelCanvas.id = "#wheelCanvas";
+	wheelCanvas.width = "640";
+	wheelCanvas.height = "640";
+	wheelCanvas.className = "inline"
+	var wheelCanvasErrorP = document.createElement("p");
+	wheelCanvasErrorP.style = "{color: white}";
+	wheelCanvasErrorP.align = "center"
+	wheelCanvasErrorP.innerHTML = "Sorry, your browser doesn't support canvas. Please try another.";
+	wheelCanvas.appendChild(wheelCanvasErrorP);
+	
+	var girlsDiv = document.createElement("div");
+	girlsDiv.id = "#girlsDiv";
+	girlsDiv.width = "480";
+	girlsDiv.height = "640";
+	girlsDiv.className = "inline girls"
+	var girlsTitle = document.createElement("p");
+	girlsTitle.id = "#girlsTitle";
+	girlsTitle.style = "font-size: 24px; margin: 0px; padding: 5px;";
+	girlsTitle.innerHTML = "Girls";
+	girlsDiv.appendChild(girlsTitle);
+	var girlsScoreList = document.createElement("ul");
+	girlsScoreList.id = "#girlsScoreList";
+	girlsScoreList.height = "640";
+	girlsScoreList.align = "center";
+	girlsScoreList.className = "scroll-list"
+	girlsDiv.appendChild(girlsScoreList);
+	girlsDiv.appendChild(document.createElement("hr"));
+	var girlsScore = document.createElement("p");
+	girlsScore.id = "#girlsScore";
+	girlsScore.style = "font-size: 48px; margin: 0px; padding: 5px;";
+	girlsScore.innerHTML = "0";
+	girlsDiv.appendChild(girlsScore);
+	var girlsSpinBtn = document.createElement("button");
+	girlsSpinBtn.style = "padding: 5px";
+	girlsSpinBtn.innerHTML = "Spin For Girls"
+	girlsDiv.appendChild(girlsSpinBtn);
+	
+	for (i = 0; i < 30; i++) {
+		var testItem = document.createElement("li");
+		testItem.innerHTML = "Test " + i;
+		girlsScoreList.appendChild(testItem);
+	}
+	
+	var boysDiv = document.createElement("div");
+	boysDiv.id = "#boysDiv";
+	boysDiv.width = "480";
+	boysDiv.height = "640";
+	boysDiv.className = "inline boys"
+	var boysTitle = document.createElement("p");
+	boysTitle.id = "#boysTitle";
+	boysTitle.style = "font-size: 24px; margin: 0px; padding: 5px;";
+	boysTitle.innerHTML = "Boys";
+	boysDiv.appendChild(boysTitle);
+	var boysScoreList = document.createElement("ul");
+	boysScoreList.id = "#boysScoreList";
+	boysScoreList.height = "640";
+	boysScoreList.align = "center";
+	boysScoreList.className = "scroll-list"
+	boysDiv.appendChild(boysScoreList);
+	boysDiv.appendChild(document.createElement("hr"));
+	var boysScore = document.createElement("p");
+	boysScore.id = "#boysScore";
+	boysScore.style = "font-size: 48px; margin: 0px; padding: 5px;";
+	boysScore.innerHTML = "0";
+	boysDiv.appendChild(boysScore);
+	var boysSpinBtn = document.createElement("button");
+	boysSpinBtn.style = "padding: 5px";
+	boysSpinBtn.innerHTML = "Spin For Boys"
+	boysDiv.appendChild(boysSpinBtn);
+	
+	mainDiv.appendChild(girlsDiv);
+	mainDiv.appendChild(wheelCanvas);
+	mainDiv.appendChild(boysDiv);
+	
 	wheel = new Winwheel({
+		'canvasId': '#wheelCanvas',
 		'drawMode': 'image',
 		'numSegments': 12,
 		'drawText': true,
