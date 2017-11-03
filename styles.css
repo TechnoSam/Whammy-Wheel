@@ -5,7 +5,7 @@
 	margin: auto;
 	padding: 5px;
     list-style-type: none;
-	overflow: auto;
+	overflow-y: auto;
 	
 }
 

@@ -9,6 +9,7 @@ var wheel;
 function main() {
 	
 	buildDOM();
+	updateScores();
 	
 }
 
@@ -44,7 +45,7 @@ function buildDOM() {
 	girlsTitle.innerHTML = "Girls";
 	girlsDiv.appendChild(girlsTitle);
 	var girlsScoreList = document.createElement("ul");
-	girlsScoreList.id = "#girlsScoreList";
+	girlsScoreList.id = "girlsScoreList";
 	girlsScoreList.height = "640";
 	girlsScoreList.align = "center";
 	girlsScoreList.className = "scroll-list"
@@ -58,13 +59,8 @@ function buildDOM() {
 	var girlsSpinBtn = document.createElement("button");
 	girlsSpinBtn.style = "padding: 5px";
 	girlsSpinBtn.innerHTML = "Spin For Girls"
+	girlsSpinBtn.onclick = function () { spin("girls"); };
 	girlsDiv.appendChild(girlsSpinBtn);
-	
-	for (i = 0; i < 30; i++) {
-		var testItem = document.createElement("li");
-		testItem.innerHTML = "Test " + i;
-		girlsScoreList.appendChild(testItem);
-	}
 	
 	var boysDiv = document.createElement("div");
 	boysDiv.id = "#boysDiv";
@@ -77,7 +73,7 @@ function buildDOM() {
 	boysTitle.innerHTML = "Boys";
 	boysDiv.appendChild(boysTitle);
 	var boysScoreList = document.createElement("ul");
-	boysScoreList.id = "#boysScoreList";
+	boysScoreList.id = "boysScoreList";
 	boysScoreList.height = "640";
 	boysScoreList.align = "center";
 	boysScoreList.className = "scroll-list"
@@ -91,6 +87,7 @@ function buildDOM() {
 	var boysSpinBtn = document.createElement("button");
 	boysSpinBtn.style = "padding: 5px";
 	boysSpinBtn.innerHTML = "Spin For Boys"
+	boysSpinBtn.onclick = function () { spin("boys"); };
 	boysDiv.appendChild(boysSpinBtn);
 	
 	mainDiv.appendChild(girlsDiv);
@@ -127,8 +124,8 @@ function buildDOM() {
 		'animation' :           // Specify the animation to use.
 		{
 			'type'     : 'spinToStop',
-			'duration' : 15,     // Duration in seconds.
-			'spins'    : 3,     // Number of complete spins.
+			'duration' : 2,     // Duration in seconds.
+			'spins'    : 1,     // Number of complete spins.
 			//'easing': 'easeOutQuad',
 			'callbackFinished' : 'doneSpinning()'
 		}
@@ -154,17 +151,65 @@ function buildDOM() {
 		console.log("Loaded image");
 	}
 	wheelImg.src = "globe2.png";
-			
-	var spinButton = document.createElement("button");
-	spinButton.innerHTML = "Spin!"
-	spinButton.onclick = spin
-	document.body.appendChild(spinButton);
 	
 }
 
-function spin() {
+function addPts(team, pts) {
 	
-	console.log("Spinning");
+	if (team !== "boys" && team !== "girls") {
+		console.log("Unrecognized team: " + team);
+		return;
+	}
+	
+	var listId = team + "ScoreList"
+	var scoreList = document.getElementById(listId);
+	var points = document.createElement("li");
+	points.innerHTML = pts;
+	points.tabindex = "1";
+	scoreList.append(points);
+	$("#" + listId).animate({scrollTop: $("#" + listId).prop("scrollHeight")}, 500);
+	updateScores();
+	
+}
+
+function updateScores() {
+	
+	var teams = ["girls", "boys"];
+	teams.forEach(function(team) {
+		
+		var score = 0;
+		var pts = document.getElementById(team + "ScoreList").getElementsByTagName("li");
+		for (var i = 0, len = pts.length; i < len; i++ ) {
+			value = pts[i].innerHTML;
+			if (value === "WHAMMY") {
+				score = 0;
+			}
+			else {
+				score += parseInt(value);
+			}
+		}
+		
+		var scoreElem = document.getElementById("#" + team + "Score");
+		scoreElem.innerHTML = score;
+		
+	});
+	
+	console.log("Scores updated");
+	
+}
+
+var currTeam;
+
+function spin(team) {
+	
+	if (team !== "boys" && team !== "girls") {
+		console.log("Unrecognized team: " + team);
+		return;
+	}
+	
+	currTeam = team;
+	
+	console.log("Spinning for " + team);
 	
 	console.log("Resetting Wheel");
 	wheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
@@ -178,9 +223,9 @@ function spin() {
 
 function doneSpinning() {
 	
-	console.log("Done!");
+	console.log("Done spinning for " + currTeam);
 	var winningSegment = wheel.getIndicatedSegment();
-                
-    alert("You have won " + winningSegment.text);
+    
+	addPts(currTeam, winningSegment.text);
 	
 }
