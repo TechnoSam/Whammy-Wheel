@@ -18,7 +18,7 @@
 .girls {
 	
 	float: left;
-	width: 480px;
+	width: 200px;
 	height: 600px;
 	border: 5px solid #ffd1dc;
 	
@@ -27,7 +27,7 @@
 .boys {
 	
 	float: right;
-	width: 480px;
+	width: 200px;
 	height: 600px;
 	border: 5px solid #9a9aff;
 	
