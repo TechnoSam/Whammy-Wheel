@@ -39,6 +39,23 @@ function main() {
 	
 }
 
+function drawTriangle()
+{
+	// Get the canvas context the wheel uses.
+	var ctx = wheel.ctx;
+
+	ctx.strokeStyle = 'black';     // Set line colour.
+	ctx.fillStyle   = 'yellow';     // Set fill colour.
+	ctx.lineWidth   = 2;
+	ctx.beginPath();              // Begin path.
+	ctx.moveTo(290, -10);           // Move to initial position.
+	ctx.lineTo(350, -10);           // Draw lines to make the shape.
+	ctx.lineTo(320, 15);
+	ctx.lineTo(291, -10);
+	ctx.stroke();                 // Complete the path by stroking (draw lines).
+	ctx.fill();                   // Then fill.
+}
+
 function buildDOM() {
 	
 	var mainDiv = document.createElement("div");
@@ -191,7 +208,8 @@ function buildDOM() {
 			'duration' : SPIN_TIME_SEC,     // Duration in seconds.
 			'spins'    : NUM_SPINS,     // Number of complete spins.
 			//'easing': 'easeOutQuad',
-			'callbackFinished' : 'doneSpinning()'
+			'callbackFinished' : 'doneSpinning()',
+			'callbackAfter': 'drawTriangle()'
 		}
     });
 	
