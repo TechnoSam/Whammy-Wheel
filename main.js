@@ -2,27 +2,45 @@
 // -------------------------------------------------------------------------------------------
 // Customizations:
 
+// WHAMMY substitute name
+var WHAMMY_TEXT = "ZONK"
+
 // Point values
 // Each of these represents a sector on the wheel
-var POINTS_1 = "WHAMMY";
+var POINTS_1 = WHAMMY_TEXT;
 var POINTS_2 = "500";
 var POINTS_3 = "50";
 var POINTS_4 = "100";
 var POINTS_5 = "150";
 var POINTS_6 = "200";
-var POINTS_7 = "WHAMMY";
+var POINTS_7 = WHAMMY_TEXT;
 var POINTS_8 = "200";
 var POINTS_9 = "150";
 var POINTS_10 = "100";
 var POINTS_11 = "50";
 var POINTS_12 = "250";
 
+// Colors
+// Each of these represents a sector on the wheel
+var COLOR_1 = "red";
+var COLOR_2 = "orange";
+var COLOR_3 = "yellow";
+var COLOR_4 = "blue";
+var COLOR_5 = "green";
+var COLOR_6 = "purple";
+var COLOR_7 = "red";
+var COLOR_8 = "orange";
+var COLOR_9 = "yellow";
+var COLOR_10 = "blue";
+var COLOR_11 = "green";
+var COLOR_12 = "purple";
+
 // Spin Parameters
 // Adjusting these numbers affect how the wheel behaves while spinning
 // The time the wheel will spin in seconds
-var SPIN_TIME_SEC = 7;
+var SPIN_TIME_SEC = 5;
 // The minimum number of complete spins
-var NUM_SPINS = 3;
+var NUM_SPINS = 2;
 
 // -----------------------------------------------------------------------------------------
 
@@ -116,7 +134,7 @@ function buildDOM() {
 	girlsPlusBtn.className = "inline";
 	girlsPlusBtn.innerHTML = "+";
 	girlsPlusBtn.title = "Add a score";
-	girlsPlusBtn.onclick = function() { var p = prompt("Enter a point value or WHAMMY"); if (p) { addPts("girls", p); } };
+	girlsPlusBtn.onclick = function() { var p = prompt("Enter a point value or " + WHAMMY_TEXT); if (p) { addPts("girls", p); } };
 	girlsScoreDiv.appendChild(girlsPlusBtn);
 	var girlsSpinBtn = document.createElement("button");
 	girlsSpinBtn.style = "padding: 5px";
@@ -163,7 +181,7 @@ function buildDOM() {
 	boysPlusBtn.className = "inline";
 	boysPlusBtn.innerHTML = "+";
 	boysPlusBtn.title = "Add a score";
-	boysPlusBtn.onclick = function() { var p = prompt("Enter a point value or WHAMMY"); if (p) { addPts("boys", p); } };
+	boysPlusBtn.onclick = function() { var p = prompt("Enter a point value or " + WHAMMY_TEXT); if (p) { addPts("boys", p); } };
 	boysScoreDiv.appendChild(boysPlusBtn);
 	var boysSpinBtn = document.createElement("button");
 	boysSpinBtn.style = "padding: 5px";
@@ -177,7 +195,6 @@ function buildDOM() {
 	
 	wheel = new Winwheel({
 		'canvasId': '#wheelCanvas',
-		'drawMode': 'image',
 		'numSegments': 12,
 		'drawText': true,
 		'textOrientation': 'curved',
@@ -186,21 +203,21 @@ function buildDOM() {
 		'textFontSize': 24,
 		'imageOverlay': true,
 		'lineWidth': 4,
-		'strokeStyle': 'white',
+		'strokeStyle': 'black',
 		'segments':
 		[
-		   {'text': POINTS_1},
-		   {'text': POINTS_2},
-		   {'text': POINTS_3},
-		   {'text': POINTS_4},
-		   {'text': POINTS_5},
-		   {'text': POINTS_6},
-		   {'text': POINTS_7},
-		   {'text': POINTS_8},
-		   {'text': POINTS_9},
-		   {'text': POINTS_10},
-		   {'text': POINTS_11},
-		   {'text': POINTS_12}
+		   {'text': POINTS_1, 'fillStyle': COLOR_1},
+		   {'text': POINTS_2, 'fillStyle': COLOR_2},
+		   {'text': POINTS_3, 'fillStyle': COLOR_3},
+		   {'text': POINTS_4, 'fillStyle': COLOR_4},
+		   {'text': POINTS_5, 'fillStyle': COLOR_5},
+		   {'text': POINTS_6, 'fillStyle': COLOR_6},
+		   {'text': POINTS_7, 'fillStyle': COLOR_7},
+		   {'text': POINTS_8, 'fillStyle': COLOR_8},
+		   {'text': POINTS_9, 'fillStyle': COLOR_9},
+		   {'text': POINTS_10, 'fillStyle': COLOR_10},
+		   {'text': POINTS_11, 'fillStyle': COLOR_11},
+		   {'text': POINTS_12, 'fillStyle': COLOR_12}
 		],
 		'animation' :           // Specify the animation to use.
 		{
@@ -213,26 +230,55 @@ function buildDOM() {
 		}
     });
 	
-	wheel.segments[1].textFillStyle = '#FFFF00';
-	wheel.segments[2].textFillStyle = '#FFFF00';
-	wheel.segments[3].textFillStyle = '#FFFF00';
-	wheel.segments[4].textFillStyle = '#FFFF00';
-	wheel.segments[5].textFillStyle = '#FFFF00';
-	wheel.segments[6].textFillStyle = '#FFFF00';
-	wheel.segments[7].textFillStyle = '#FFFF00';
-	wheel.segments[8].textFillStyle = '#FFFF00';
-	wheel.segments[9].textFillStyle = '#FFFF00';
-	wheel.segments[10].textFillStyle = '#FFFF00';
-	wheel.segments[11].textFillStyle = '#FFFF00';
-	wheel.segments[12].textFillStyle = '#FFFF00';
-			
-	var wheelImg = new Image();
-	wheelImg.onload = function() {
-		wheel.wheelImage = wheelImg;
-		wheel.draw();
-		console.log("Loaded image");
-	}
-	wheelImg.src = "globe2.png";
+	wheel.segments[1].textFillStyle = 'white';
+	wheel.segments[1].textStrokeStyle = 'black';
+	wheel.segments[1].textLineWidth = '5';
+	
+	wheel.segments[2].textFillStyle = 'white';
+	wheel.segments[2].textStrokeStyle = 'black';
+	wheel.segments[2].textLineWidth = '5';
+	
+	wheel.segments[3].textFillStyle = 'white';
+	wheel.segments[3].textStrokeStyle = 'black';
+	wheel.segments[3].textLineWidth = '5';
+	
+	wheel.segments[4].textFillStyle = 'white';
+	wheel.segments[4].textStrokeStyle = 'black';
+	wheel.segments[4].textLineWidth = '5';
+	
+	wheel.segments[5].textFillStyle = 'white';
+	wheel.segments[5].textStrokeStyle = 'black';
+	wheel.segments[5].textLineWidth = '5';
+	
+	wheel.segments[6].textFillStyle = 'white';
+	wheel.segments[6].textStrokeStyle = 'black';
+	wheel.segments[6].textLineWidth = '5';
+	
+	wheel.segments[7].textFillStyle = 'white';
+	wheel.segments[7].textStrokeStyle = 'black';
+	wheel.segments[7].textLineWidth = '5';
+	
+	wheel.segments[8].textFillStyle = 'white';
+	wheel.segments[8].textStrokeStyle = 'black';
+	wheel.segments[8].textLineWidth = '5';
+	
+	wheel.segments[9].textFillStyle = 'white';
+	wheel.segments[9].textStrokeStyle = 'black';
+	wheel.segments[9].textLineWidth = '5';
+	
+	wheel.segments[10].textFillStyle = 'white';
+	wheel.segments[10].textStrokeStyle = 'black';
+	wheel.segments[10].textLineWidth = '5';
+	
+	wheel.segments[11].textFillStyle = 'white';
+	wheel.segments[11].textStrokeStyle = 'black';
+	wheel.segments[11].textLineWidth = '5';
+	
+	wheel.segments[12].textFillStyle = 'white';
+	wheel.segments[12].textStrokeStyle = 'black';
+	wheel.segments[12].textLineWidth = '5';
+	
+	wheel.draw();
 	
 }
 
@@ -274,7 +320,7 @@ function updateScores() {
 		var pts = document.getElementById(team + "ScoreList").getElementsByTagName("li");
 		for (var i = 0, len = pts.length; i < len; i++ ) {
 			value = pts[i].innerHTML;
-			if (value === "WHAMMY") {
+			if (value === WHAMMY_TEXT) {
 				score = 0;
 			}
 			else {
